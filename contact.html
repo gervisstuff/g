@@ -1,11 +1,38 @@
 <html>
 <body>
-< div class ="container"> < form action ="/ action_page.php">
-< label for ="fname"> First Name < / label > < input type ="text" id ="fname" name ="firstname" placeholder ="Your name..">
-< label for ="lname"> Last Name < / label > < input type ="text" id ="lname" name ="lastname" placeholder ="Your last name..">
-< label for ="country"> Country < / label > < select id ="country" name ="country"> < option value ="australia"> Australi a < /option > < option value ="canada"> Canada < / option > < option value ="usa"> USA < /option > < /select >
-< label for ="subject"> Subject < / label > < textarea id ="subject" name ="subject" placeholder ="Write something.." style ="height:200px">< / textarea >
-< input type ="submit" value ="Submit">
-< /form > < /div >
+  <?php
+$action=$_REQUEST['action'];
+if ($action=="")    /* display the contact form */
+    {
+    ?>
+    <form  action="" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="action" value="submit">
+    Your name:<br>
+    <input name="name" type="text" value="" size="30"/><br>
+    Your email:<br>
+    <input name="email" type="text" value="" size="30"/><br>
+    Your message:<br>
+    <textarea name="message" rows="7" cols="30"></textarea><br>
+    <input type="submit" value="Send email"/>
+    </form>
+    <?php
+    } 
+else                /* send the submitted data */
+    {
+    $name=$_REQUEST['name'];
+    $email=$_REQUEST['email'];
+    $message=$_REQUEST['message'];
+    if (($name=="")||($email=="")||($message==""))
+        {
+        echo "All fields are required, please fill <a href=\"\">the form</a> again.";
+        }
+    else{        
+        $from="From: $name<$email>\r\nReturn-path: $email";
+        $subject="Message sent using your contact form";
+        mail("gervismike@gmail.com", $subject, $message, $from);
+        echo "Email sent!";
+        }
+    }  
+?>
 </body>
-</html>
+</html>you
